@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 struct GameScore {
-      int correctColourAndPosition;
-      int correctColourButWrongPosition;
+    int correctColourAndPosition;
+    int correctColourButWrongPosition;
 };
 
 struct GameScore* evaluateGameScore(const enum Colours* userInput, const enum Colours* solution, int amountOfColoursToGuess) {

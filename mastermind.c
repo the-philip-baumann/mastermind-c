@@ -9,11 +9,20 @@ enum GameStates {
     PENDING
 };
 
-
 // TODO: Implement Mastermind
 int main(int argc, char* argv[]) {
+    struct Config* confige = malloc(sizeof(struct Config));
+    confige->roundsToPlay = 12;
+    confige->amountOfColoursToGuess = 4;
+    writeConfigFile(confige);
+    printConfig();
     const struct Config* config = readConfigFile();
+
+    printf("Config: %d - %d", config->roundsToPlay, config->amountOfColoursToGuess);
+
     const enum Colours* randomColours = generateRandomColours(config->amountOfColoursToGuess);
+
+
 
     printf("Generated random colours %s - %s - %s - %s \n",
          getStringRepresentation(randomColours[0]),
@@ -22,13 +31,12 @@ int main(int argc, char* argv[]) {
          getStringRepresentation(randomColours[3])
          );
 
-    enum GameState gameState = PENDING;
+
+    enum GameStates gameState = PENDING;
     int currentRound = 1;
     while (gameState == PENDING) {
         const enum Colours* userInput = readUserInput(config->amountOfColoursToGuess);
         const struct GameScore* gameScore = evaluateGameScore(userInput, randomColours, config->amountOfColoursToGuess);
-
-
 
         printf("GameScore: %d red - %d white \n", gameScore->correctColourAndPosition, gameScore->correctColourButWrongPosition);
 
