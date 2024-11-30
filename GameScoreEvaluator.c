@@ -42,13 +42,6 @@ struct GameScore* evaluateGameScore(const enum Colours* userInput, const enum Co
     }
     printf("\n");
 
-    printf("user input: ");
-    for (int i = 0; i < amountOfColoursToGuess; i++) {
-        printf("%s ", getStringRepresentation(userInput[i]));
-        if (i < amountOfColoursToGuess - 1) printf("- ");
-    }
-    printf("\n");
-
     printf("processed solution flags: ");
     for (int i = 0; i < amountOfColoursToGuess; i++) {
         printf("%d ", processedSolution[i]);
@@ -59,10 +52,6 @@ struct GameScore* evaluateGameScore(const enum Colours* userInput, const enum Co
     for (int i = 0; i < amountOfColoursToGuess; i++) {
         printf("%d ", processedInput[i]);
     }
-    printf("\n");
-
-    printf("correct colour and position: %d\n", gameScore->correctColourAndPosition);
-    printf("correct colour but wrong position: %d\n", gameScore->correctColourButWrongPosition);
     printf("\n");
 
     return gameScore;

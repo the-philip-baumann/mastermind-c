@@ -4,7 +4,7 @@ A simple implementation of the **Mastermind** game in C.
 
 ## Game Rules:
 
-1. The solution consists of **4 colors** (can be configured) randomly chosen from a set of **6 colors**.
+1. The solution consists of **4 colors** (can be configured) randomly chosen from a set of **8 colors**.
 2. The player has **12 rounds** (can be configured) to guess the correct solution.
 3. After each guess, the player receives feedback:
    - **Correct color and position**: Number of colors that are correct in both color and position.

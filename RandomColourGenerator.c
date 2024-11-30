@@ -17,3 +17,15 @@ enum Colours* generateRandomColours(const int amountOfColours) {
 
   return colours;
 }
+
+void printGeneratedColours(const struct Config *config, const enum Colours *randomColours)
+{
+    for (int i = 0; i < config->amountOfColoursToGuess; ++i)
+    {
+        printf(" %s", getStringRepresentation(randomColours[i]));
+        if (i < config->amountOfColoursToGuess - 1)
+        {
+            printf(" -");
+        }
+    }
+}

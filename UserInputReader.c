@@ -10,13 +10,13 @@ enum Colours* readUserInput(const int amountOfColours) {
         enum Colours colour = getColourFromStringRepresentation(userInput);
         if (colour == -1) {
             i--;
-            printf("invalid colour try another colour");
+            printf("invalid colour try another colour\n");
         } else {
             colours[i] = colour;
         }
     }
 
-    printf("your guess in this round is:");
+    printf("\nyour guess in this round is:");
     for (int i = 0; i < amountOfColours; ++i) {
         printf(" %s", getStringRepresentation(colours[i]));
         if (i < amountOfColours - 1) {
