@@ -33,15 +33,6 @@ struct Config* readConfigFile() {
 }
 
 enum FileReadCode writeConfigFile(struct Config* config) {
-    // TODO: Clear up basic implementation
-    if (remove(FILENAME) == 0) {
-        printf("Successfuly removed File: '%s'\n", FILENAME);
-    } else {
-        printf("Failed to remove File '%s'\n", FILENAME);
-        exit(1);
-    }
-
-    // Mode "rb" -> "read binary"
     FILE* configFile = fopen(FILENAME, "wb");
     if (!configFile) {
         perror("Failed to open config file (config.dat)");
@@ -50,8 +41,11 @@ enum FileReadCode writeConfigFile(struct Config* config) {
 
     printf("Data to save: %d - %d \n", config->roundsToPlay, config->amountOfColoursToGuess);
 
-    // TODO: Fix content is not being written to file
-    fwrite(config, sizeof(struct Config), 1, configFile);
+    if (fwrite(config, sizeof(struct Config), 1, configFile) != 1) {
+        perror("Failed to write to config file");
+        fclose(configFile);
+        return FAILED;
+    }
     fclose(configFile);
 
     return SUCCESSFUL;
@@ -59,9 +53,10 @@ enum FileReadCode writeConfigFile(struct Config* config) {
 
 
 void printConfig() {
-    FILE* configFile = fopen(FILENAME, "wb");
+    FILE* configFile = fopen(FILENAME, "rb");
     if (!configFile) {
         perror("Failed to open config file (config.dat)");
+        return;
     }
 
     struct Config* config = malloc(sizeof(struct Config));

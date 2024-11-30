@@ -10,17 +10,20 @@ enum GameState {
 };
 
 int main(int argc, char* argv[]) {
-    struct Config* initialConfig = malloc(sizeof(struct Config));
+struct Config* initialConfig = malloc(sizeof(struct Config));
     initialConfig->roundsToPlay = 12;
     initialConfig->amountOfColoursToGuess = 4;
-    writeConfigFile(initialConfig);
+    writeConfigFile(initialConfig); 
+    free(initialConfig);
+
     printConfig();
+
     const struct Config* config = readConfigFile();
 
-    printf("Config: %d - %d", config->roundsToPlay, config->amountOfColoursToGuess);
+    printf("Config: %d - %d \n", config->roundsToPlay, config->amountOfColoursToGuess);
 
     const enum Colours* randomColours = generateRandomColours(config->amountOfColoursToGuess);
-
+    
     printf("generated random colours");
     for (int i = 0; i < config->amountOfColoursToGuess; ++i) {
         printf(" %s", getStringRepresentation(randomColours[i]));
@@ -36,10 +39,7 @@ int main(int argc, char* argv[]) {
         const enum Colours* userInput = readUserInput(config->amountOfColoursToGuess);
         const struct GameScore* gameScore = evaluateGameScore(userInput, randomColours, config->amountOfColoursToGuess);
 
-
-
         printf("GameScore: %d red - %d white \n", gameScore->correctColourAndPosition, gameScore->correctColourButWrongPosition);
-
 
         printf("User input: %s - %s - %s - %s \n",
             getStringRepresentation(userInput[0]),

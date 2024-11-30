@@ -1,4 +1,7 @@
 .idea/
 .DS_Store
-
+.vscode/
+build/
+mastermind.dSYM/
+mastermind
 cmake-build-debug
