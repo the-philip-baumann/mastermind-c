@@ -12,7 +12,6 @@ enum Colours* generateRandomColours(const int amountOfColours) {
 
   for (int i = 0; i < amountOfColours; i++) {
     const int random = rand() % (max - min) + min;
-    printf("random colour number: %d\n", random);
     colours[i] = (enum Colours) random;
   }
 

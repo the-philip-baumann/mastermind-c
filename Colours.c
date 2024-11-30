@@ -27,6 +27,15 @@ char *getStringRepresentation(enum Colours colour) {
     }
 }
 
+void printAllColours() {
+    for (int i = 0; i <= PURPLE; i++) {
+        printf("%s", getStringRepresentation((enum Colours)i));
+        if (i < PURPLE) {
+            printf(" - ");
+        }
+    }
+    printf("\n"); // Newline at the end
+}
 // Returns -1 if input is not a valid colour
 enum Colours getColourFromStringRepresentation(char *input) {
     char clone[10];

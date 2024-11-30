@@ -10,17 +10,20 @@ enum GameState {
 };
 
 int main(int argc, char* argv[]) {
-struct Config* initialConfig = malloc(sizeof(struct Config));
+    printf("Welcome to masterminds!\n"
+        "Your goal is to guess the correct colours in correct order.\n"
+        "These are the colours included in the game:\n");
+    printAllColours();
+
+    struct Config* initialConfig = malloc(sizeof(struct Config));
     initialConfig->roundsToPlay = 12;
     initialConfig->amountOfColoursToGuess = 4;
-    writeConfigFile(initialConfig); 
+    
+    writeConfigFile(initialConfig); //only write if not set by user
     free(initialConfig);
 
     printConfig();
-
     const struct Config* config = readConfigFile();
-
-    printf("Config: %d - %d \n", config->roundsToPlay, config->amountOfColoursToGuess);
 
     const enum Colours* randomColours = generateRandomColours(config->amountOfColoursToGuess);
     

@@ -39,8 +39,6 @@ enum FileReadCode writeConfigFile(struct Config* config) {
         return FAILED;
     }
 
-    printf("Data to save: %d - %d \n", config->roundsToPlay, config->amountOfColoursToGuess);
-
     if (fwrite(config, sizeof(struct Config), 1, configFile) != 1) {
         perror("Failed to write to config file");
         fclose(configFile);
