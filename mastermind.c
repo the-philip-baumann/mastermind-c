@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
     printConfig();
 
     const enum Colours* randomColours = generateRandomColours(config->amountOfColoursToGuess);
-    
+
     enum GameState gameState = PENDING;
     int currentRound = 1;
     while (gameState == PENDING) {

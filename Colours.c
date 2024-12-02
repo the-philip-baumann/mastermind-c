@@ -1,4 +1,4 @@
-#define NUMBER_OF_COLOURS 8;
+#define NUMBER_OF_COLOURS 8
 #include <ctype.h>
 #include <string.h>
 

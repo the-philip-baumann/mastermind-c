@@ -18,41 +18,22 @@ struct GameScore* evaluateGameScore(const enum Colours* userInput, const enum Co
     for (int i = 0; i < amountOfColoursToGuess; i++) {
         if (userInput[i] == solution[i]) {
             gameScore->correctColourAndPosition++;
-            processedSolution[i] = 1; // Mark as processed
-            processedInput[i] = 1;   // Mark as processed
+            processedSolution[i] = 1;
+            processedInput[i] = 1;
         }
     }
 
     for (int i = 0; i < amountOfColoursToGuess; i++) {
-        if (!processedInput[i]) { // Skip already processed input
+        if (!processedInput[i]) {
             for (int j = 0; j < amountOfColoursToGuess; j++) {
                 if (!processedSolution[j] && userInput[i] == solution[j]) {
                     gameScore->correctColourButWrongPosition++;
-                    processedSolution[j] = 1; // Mark as processed
-                    break; // Stop after finding one match
+                    processedSolution[j] = 1;
+                    break;
                 }
             }
         }
     }
-
-    printf("solution: ");
-    for (int i = 0; i < amountOfColoursToGuess; i++) {
-        printf("%s ", getStringRepresentation(solution[i]));
-        if (i < amountOfColoursToGuess - 1) printf("- ");
-    }
-    printf("\n");
-
-    printf("processed solution flags: ");
-    for (int i = 0; i < amountOfColoursToGuess; i++) {
-        printf("%d ", processedSolution[i]);
-    }
-    printf("\n");
-
-    printf("processed input flags: ");
-    for (int i = 0; i < amountOfColoursToGuess; i++) {
-        printf("%d ", processedInput[i]);
-    }
-    printf("\n");
 
     return gameScore;
 }
