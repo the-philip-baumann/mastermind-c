@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     printAllColours();
 
     char workflow[1];
-    printf("\nType any character if you want to start the game!");
+    printf("\nType any character + 'Enter' if you want to start the game!");
     printf("\nType '1' if you want to adjust the game configuration: ");
     scanf("%s", workflow);
 
