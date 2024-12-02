@@ -15,29 +15,25 @@ int main(int argc, char* argv[]) {
         "These are the colours included in the game:\n");
     printAllColours();
 
-    struct Config* initialConfig = malloc(sizeof(struct Config));
-    initialConfig->roundsToPlay = 12;
-    initialConfig->amountOfColoursToGuess = 4;
-    
-    writeConfigFile(initialConfig); //only write if not set by user
-    free(initialConfig);
+    char workflow[1];
+    printf("\nType any character if you want to start the game!");
+    printf("\nType '1' if you want to adjust the game configuration: ");
+    scanf("%s", workflow);
 
-    printConfig();
+    if (workflow[0] == '1') {
+        adjustUserConfiguration();
+    }
+
     const struct Config* config = readConfigFile();
+    printConfig();
 
     const enum Colours* randomColours = generateRandomColours(config->amountOfColoursToGuess);
     
-    printf("generated random colours");
-    printGeneratedColours(config, randomColours);
-    printf("\n\n");
-
     enum GameState gameState = PENDING;
     int currentRound = 1;
     while (gameState == PENDING) {
         const enum Colours* userInput = readUserInput(config->amountOfColoursToGuess);
         const struct GameScore* gameScore = evaluateGameScore(userInput, randomColours, config->amountOfColoursToGuess);
-
-        printf("GameScore: %d black - %d white \n", gameScore->correctColourAndPosition, gameScore->correctColourButWrongPosition);
 
         if (gameScore->correctColourAndPosition == config->amountOfColoursToGuess) {
             gameState = WON;

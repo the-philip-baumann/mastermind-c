@@ -13,25 +13,6 @@ enum FileReadCode {
     FAILED
 };
 
-struct Config* readConfigFile() {
-    // Mode "wb" -> "write binary"
-    FILE* configFile = fopen(FILENAME, "rb");
-
-    if (!configFile) {
-        perror("Failed to open config file (config.dat) using default config");
-        struct Config* config = malloc(sizeof(struct Config));
-        config->roundsToPlay = 12;
-        config->amountOfColoursToGuess = 4;
-        return config;
-    }
-
-    struct Config* config = malloc(sizeof(struct Config));
-    fread(config, sizeof(struct Config), 1, configFile);
-    fclose(configFile);
-
-    return config;
-}
-
 enum FileReadCode writeConfigFile(struct Config* config) {
     FILE* configFile = fopen(FILENAME, "wb");
     if (!configFile) {
@@ -44,11 +25,61 @@ enum FileReadCode writeConfigFile(struct Config* config) {
         fclose(configFile);
         return FAILED;
     }
+
     fclose(configFile);
 
     return SUCCESSFUL;
 }
 
+struct Config* defaultConfig() {
+    struct Config* defaultConfig = malloc(sizeof(struct Config));
+    defaultConfig->roundsToPlay = 12;
+    defaultConfig->amountOfColoursToGuess = 4;
+    writeConfigFile(defaultConfig);
+    return defaultConfig;
+}
+
+struct Config* readConfigFile() {
+    FILE* configFile = fopen(FILENAME, "rb");
+
+    if (!configFile) {
+        return defaultConfig();
+    }
+
+    struct Config* config = malloc(sizeof(struct Config));
+    if (fread(config, sizeof(struct Config), 1, configFile) != 1) {
+        perror("Error reading config file");
+        free(config);
+        fclose(configFile);
+        return defaultConfig();
+    }
+
+    fclose(configFile);
+
+    return config;
+}
+
+void adjustUserConfiguration() {
+    int roundsToPlay, amountOfColoursToGuess;
+    printf("\nSet amount of rounds you want to play: ");
+    scanf("%d", &roundsToPlay);
+    printf("Set amount of colours you want to guess: ");
+    scanf("%d", &amountOfColoursToGuess);
+
+    if (roundsToPlay > 20 || roundsToPlay < 1 ||
+        amountOfColoursToGuess < 1 || amountOfColoursToGuess > 8) {
+        printf("You have entered invalid configuration, default configuration is used");
+        roundsToPlay = 12;
+        amountOfColoursToGuess = 4;
+    }
+
+    struct Config* userConfig = malloc(sizeof(struct Config));
+    userConfig->roundsToPlay = roundsToPlay;
+    userConfig->amountOfColoursToGuess = amountOfColoursToGuess;
+
+    writeConfigFile(userConfig);
+    free(userConfig);
+}
 
 void printConfig() {
     FILE* configFile = fopen(FILENAME, "rb");
@@ -61,7 +92,7 @@ void printConfig() {
     fread(config, sizeof(struct Config), 1, configFile);
     fclose(configFile);
 
-    printf("Rounds: %d - Amount of Colours to guess: %d \n", config->roundsToPlay, config->amountOfColoursToGuess);
+    printf("\nRounds: %d - Amount of Colours to guess: %d \n\n", config->roundsToPlay, config->amountOfColoursToGuess);
 
     free(config);
 }
