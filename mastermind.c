@@ -15,17 +15,19 @@ int main(int argc, char* argv[]) {
         "These are the colours included in the game:\n");
     printAllColours();
 
+    const struct Config* config = readConfigFile();
+    printConfig();
+
     char workflow[1];
-    printf("\nType any character + 'Enter' if you want to start the game!");
+    printf("Type any character + 'Enter' if you want to start the game!");
     printf("\nType '1' if you want to adjust the game configuration: ");
     scanf("%s", workflow);
 
     if (workflow[0] == '1') {
         adjustUserConfiguration();
+        config = readConfigFile();
+        printConfig();
     }
-
-    const struct Config* config = readConfigFile();
-    printConfig();
 
     const enum Colours* randomColours = generateRandomColours(config->amountOfColoursToGuess);
 
@@ -66,5 +68,5 @@ int main(int argc, char* argv[]) {
         printGeneratedColours(config, randomColours);
         printf("\n");
     }
-
+    
 }
